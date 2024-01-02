@@ -1,8 +1,7 @@
 import React from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 const FolderList = ({folderList}) => {
-    
    
     return (
     <div className='flex'>
@@ -17,4 +16,4 @@ const FolderList = ({folderList}) => {
   )
 }
 
-export default FolderList
+export default FolderList;

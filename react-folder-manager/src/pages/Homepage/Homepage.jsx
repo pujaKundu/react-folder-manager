@@ -1,8 +1,6 @@
 import React, { useState } from 'react'
 import FolderList from '../../components/FolderList/FolderList'
 
-
-
 const Homepage = ({allFolders}) => {
 
     const [folderName,setFolderName]=useState('')
@@ -21,16 +19,16 @@ const Homepage = ({allFolders}) => {
     }
 
     return (
-        <div className=''>
-            <h1 className='text-3xl mb-5'>Folder Manager</h1>
+        <div>
+            <h1 className='text-3xl mb-5 font-semibold text-slate-700'>Folder Manager</h1>
             <div className='flex justify-center items-center'>
                 
-                    <input type="text" className='border border-1 w-72 p-3 mt-2 rounded'placeholder='Enter Folder Name'
+                    <input type="text" className='border border-1 w-80 p-3 mt-2 rounded shadow-md'placeholder='Enter Folder Name' required
                     value={folderName}
                     onChange={(e)=>setFolderName(e.target.value)}
                     />
                
-            <button className='ml-5 mt-1 bg-green-400 cursor-pointer flex '
+            <button className='ml-3 mt-2 bg-green-400 cursor-pointer flex '
                 onClick={handleCreateFolder}
             >
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6 mr-2">

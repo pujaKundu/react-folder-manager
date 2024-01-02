@@ -1,14 +1,18 @@
 import React, { useState } from 'react'
 
 const Homepage = () => {
+
     const [folderName,setFolderName]=useState('')
     const [folderList,setFolderList]=useState([])
+    console.log(folderList)
     // console.log(folderName)
     const handleCreateFolder=()=>{
         // creating an object represnting a new folder
         const newFolder ={
-            name: folderName
+            folderName: folderName
         }
+        setFolderList([...folderList, newFolder])
+        setFolderName('')
     }
 
     return (
@@ -23,9 +27,11 @@ const Homepage = () => {
                     />
                 </div>
                 <button className='mt-5 bg-green-300 cursor-pointer'
-                // onClick={}
+                 onClick={handleCreateFolder}
                 >Create Folder</button>
             </div>
+            {/* show folders */}
+            <p>{folderList.length}</p>
         </div>
     )
 }

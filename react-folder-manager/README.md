@@ -1,6 +1,15 @@
-# React + Vite
+# Folder manager
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Technolgies: 
+- React Js
+- React router dom
+- Tailwind css
+
+## Installation
+- git clone https://github.com/pujaKundu/react-folder-manager
+- cd react-folder-manager
+- npm install
+- npm run dev
 
 Currently, two official plugins are available:
 

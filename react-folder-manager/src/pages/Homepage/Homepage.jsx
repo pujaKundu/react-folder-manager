@@ -6,7 +6,7 @@ const Homepage = ({allFolders}) => {
     const [folderName,setFolderName]=useState('')
     const [folderList,setFolderList]=useState(allFolders)
     
-    // console.log(folderList)
+    console.log(folderList)
     // console.log(folderName)
     const handleCreateFolder=()=>{
         // creating an object represnting a new folder

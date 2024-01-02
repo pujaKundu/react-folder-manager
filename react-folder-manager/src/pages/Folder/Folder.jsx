@@ -3,10 +3,20 @@ import { useParams } from 'react-router-dom'
 import FolderList from '../../components/FolderList/FolderList';
 
 const Folder = ({allFolders}) => {
+
+    console.log("all folders",allFolders)
     let {folderId}=useParams();
+
+    console.log(folderId)
+
+    const folderInfo= allFolders.find(folder=>{
+        console.log(folder.id)
+        folder.id == folderId});
+
+    console.log(folderInfo)
     
-    const [folderList,setFolderList]=useState(allFolders);
-    const [folderName,setFolderName]=useState('')
+    const [folderList,setFolderList]=useState([]);
+    const [folderName,setFolderName]=useState('');
     
     // console.log(folderList)
     // console.log(folderName)
@@ -17,19 +27,20 @@ const Folder = ({allFolders}) => {
             folderName: folderName
         }
         setFolderList([...folderList, newFolder])
-        
+        setFolderName('')
     }
     return (
     <div>
       {/* {folderId} */}
-      <div className='absolute top-0 left-0 m-5 bg-indigo-200 p-3 rounded'>Folder Id: <span className='font-semibold'>{folderId}</span></div>
+      <div className='w-32 top-0 left-0 mt-5 bg-indigo-200 p-3 rounded'>
+        Folder Id: <span className='font-semibold'>{folderId}</span></div>
 
         <div className='flex justify-center items-center'>
                 
-                    <input type="text" className='border border-1 w-80 p-3 mt-2 rounded shadow-md'placeholder='Enter Sub-Folder Name' required
-                    value={folderName}
-                    onChange={(e)=>setFolderName(e.target.value)}
-                    />
+            <input type="text" className='border border-1 w-80 p-3 mt-2 rounded shadow-md'placeholder='Enter Sub-Folder Name' required
+            value={folderName}
+            onChange={(e)=>setFolderName(e.target.value)}
+            />
                
             <button className='ml-5 mt-1 bg-green-400 cursor-pointer flex '
                 onClick={handleCreateFolder}

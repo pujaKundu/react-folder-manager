@@ -1,32 +1,53 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import FolderList from '../../components/FolderList/FolderList'
 
 const Homepage = ({allFolders}) => {
 
+    // const [folderName,setFolderName]=useState('')
+    const [folderList,setFolderList]=useState(allFolders);
+
     const [folderName,setFolderName]=useState('')
-    const [folderList,setFolderList]=useState(allFolders)
-    
-    console.log(folderList)
+
+    // console.log('before fn',folderList)
     // console.log(folderName)
+    // const handleCreateFolder=()=>{
+    //     // creating an object represnting a new folder
+    //     const newFolder ={
+    //         id:Math.floor(Math.random() * 100),
+    //         folderName: folderName,
+    //         children:[]
+    //     }
+    //     setFolderList([...folderList, newFolder])
+    //     setFolderName('')
+    //     console.log('homepage folders',folderList);
+
+    //     // updated all folders
+    //     // setUpdatedAllFolders([...allFolders, newFolder])
+    // }
+
     const handleCreateFolder=()=>{
         // creating an object represnting a new folder
         const newFolder ={
             id:Math.floor(Math.random() * 100),
-            folderName: folderName
+            folderName: folderName,
+            children:[]
         }
         setFolderList([...folderList, newFolder])
         setFolderName('')
+        // console.log('homepage folders',folderList);
     }
+
+    console.log('homepage folders 1',folderList)
 
     return (
         <div>
-            <h1 className='text-3xl mb-5 font-semibold text-slate-700'>Folder Manager</h1>
-            <div className='flex justify-center items-center'>
+            
+            {/* <div className='flex justify-center items-center'>
                 
-                    <input type="text" className='border border-1 w-80 p-3 mt-2 rounded shadow-md'placeholder='Enter Folder Name' required
-                    value={folderName}
-                    onChange={(e)=>setFolderName(e.target.value)}
-                    />
+                <input type="text" className='border border-1 w-80 p-3 mt-2 rounded shadow-md'placeholder='Enter Folder Name' required
+                value={folderName}
+                onChange={(e)=>setFolderName(e.target.value)}
+                />
                
             <button className='ml-3 mt-2 bg-green-400 cursor-pointer flex '
                 onClick={handleCreateFolder}
@@ -37,11 +58,29 @@ const Homepage = ({allFolders}) => {
                 
                 Create Folder
                 </button>
-            </div>
+            </div> */}
             {/* show folders */}
             {/* <p>{folderList.length}</p> */}
+
+    <h1 className='text-3xl mb-5 font-semibold text-slate-700'>Folder Manager</h1>
+      <div className='flex justify-center items-center'>
+        <input
+          type='text'
+          className='border border-1 w-80 p-3 mt-2 rounded shadow-md'
+          placeholder={`Enter Folder Name`}
+          required
+          value={folderName}
+          onChange={(e) => setFolderName(e.target.value)}
+        />
+        <button
+          className='ml-5 mt-1 bg-green-400 cursor-pointer flex'
+          onClick={handleCreateFolder}
+        >
+          Create Folder
+        </button>
+      </div>
             
-            <FolderList folderList={folderList}/>
+            <FolderList folderList={folderList} handleCreateFolder={handleCreateFolder} folderName={folderName}/>
             
         </div>
     )

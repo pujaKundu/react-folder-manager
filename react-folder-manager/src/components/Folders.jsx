@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
+import Navigation from "./Navigation";
+import PathNavigation from "./PathNavigation";
 
 const Folders = ({ parent, folders, setParent, setFolders }) => {
-  console.log(folders);
 
   const [path, setPath] = useState([]);
 
@@ -22,22 +23,13 @@ const Folders = ({ parent, folders, setParent, setFolders }) => {
   }, [parent, folders]);
 
   // path functionalities
-
   const handlePathClick = (index) => {
     const newPath = path.slice(0, index + 1);
-    console.log("new path", newPath);
-
-    console.log("path", path);
-
     const currentParentFolderTitle = newPath[newPath.length - 1];
-
-    console.log("curr parent folder title ", currentParentFolderTitle);
 
     const matchedFolder = Object.entries(folders).find(
       ([key, value]) => value?.title === currentParentFolderTitle
     );
-
-    console.log("matched folder ", matchedFolder); // output:
 
     if (matchedFolder) {
       setParent(matchedFolder[0]); // matched folder id set to parent
@@ -68,24 +60,17 @@ const Folders = ({ parent, folders, setParent, setFolders }) => {
   };
 
   // delete
-
   const handleDelete = (fid) => {
-    console.log("item to delete id ", fid);
-    console.log("folder to delete ", folders[fid]);
 
     alert("Confirm delete");
 
     const updatedFolders = { ...folders };
-
     const folderToDelete = folders[fid];
 
     delete updatedFolders[fid];
 
-    // console.log(folderToDelete.child)
-
     // when i click on a child folder, it deletes the that child it from parent
-    if (
-      
+    if (  
       folderToDelete?.parent &&
       updatedFolders[folderToDelete.parent]
     ) {
@@ -93,7 +78,6 @@ const Folders = ({ parent, folders, setParent, setFolders }) => {
         folderToDelete.parent
       ].child.filter((childId) => childId !== fid);
     }
-
     // update folders
     setFolders(updatedFolders);
   };
@@ -103,88 +87,12 @@ const Folders = ({ parent, folders, setParent, setFolders }) => {
       <h1 className="text-slate-600 text-3xl">Folder Manager</h1>
 
       {/* home, create folder btn container */}
-      <div className="flex ml-5 my-5">
-        {/* back to home */}
-        <button
-          onClick={() => {
-            setParent(0);
-          }}
-          className="bg-blue-500 cursor-pointer text-white mr-5 hover:bg-blue-700"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            className="w-6 h-6 "
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"
-            />
-          </svg>
-        </button>
+      
+      <Navigation setParent={setParent} handleCreateFolder={handleCreateFolder} />
 
-        <button
-          className="bg-green-700 hover:bg-green-800 cursor-pointer flex text-white"
-          onClick={handleCreateFolder}
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            className="w-6 h-6 mr-2"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M12 4.5v15m7.5-7.5h-15"
-            />
-          </svg>
-          Create folder
-        </button>
-      </div>
       {/* folder path */}
-
-      <div className="m-5 flex">
-        {/* path icon */}
-
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke-width="1.5"
-          stroke="currentColor"
-          className="w-6 h-6 mr-3"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="m12.75 15 3-3m0 0-3-3m3 3h-7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-          />
-        </svg>
-
-        {path.length === 0 ? (
-          "Home"
-        ) : (
-          <div>
-            {/* show folder paths */}
-            {path.map((folder, index) => (
-              <span
-                key={folder}
-                onClick={() => handlePathClick(index)}
-                className="cursor-pointer mb-3 border border-b-2 border-t-0 border-e-0 border-s-0"
-              >
-                {`${folder} > `}
-              </span>
-            ))}
-          </div>
-        )}
-      </div>
+      
+      <PathNavigation path={path} handlePathClick={handlePathClick} />
 
       {Object.keys(folders).map((fid) => {
         let thisFolder = folders[fid];

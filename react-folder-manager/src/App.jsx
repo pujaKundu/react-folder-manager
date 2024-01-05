@@ -7,9 +7,7 @@ function App() {
   const [parent, setParent] = useState(0);
 
   const [folders, setFolders] = useState(() => {
- 
     const storedFolders = localStorage.getItem("folders");
-
     return storedFolders ? JSON.parse(storedFolders) : {
     };
   });

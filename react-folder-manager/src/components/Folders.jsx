@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Navigation from "./Navigation";
 import PathNavigation from "./PathNavigation";
 import Folder from "./Folder";
+import SortDropdown from "./SortDropdown";
 
 const Folders = ({ parent, folders, setParent, setFolders }) => {
   const [path, setPath] = useState([]);
@@ -56,6 +57,7 @@ const Folders = ({ parent, folders, setParent, setFolders }) => {
     const updatedFolders = { ...folders };
     const folderToDelete = folders[fid];
 
+    console.log(updatedFolders)
     delete updatedFolders[fid];
 
     // when i click on a child folder, it deletes the that child it from parent
@@ -70,7 +72,7 @@ const Folders = ({ parent, folders, setParent, setFolders }) => {
 
   const sortFolders = (option) => {
     const sortedKeys = Object.keys(folders).sort((a, b) => {
-      
+
       const titleA = folders[a].title.toUpperCase();
       const titleB = folders[b].title.toUpperCase();
   
@@ -126,13 +128,8 @@ const Folders = ({ parent, folders, setParent, setFolders }) => {
         handleCreateFolder={handleCreateFolder}
       />
       {/* Sorting dropdown */}
-      <div>
-        <label htmlFor="sort">Sort by: </label>
-        <select id="sort" value={sortOption} onChange={handleSortChange}>
-          <option value="asc">Ascending</option>
-          <option value="desc">Descending</option>
-        </select>
-      </div>
+      
+      <SortDropdown sortOption={sortOption} handleSortChange={handleSortChange} />
 
       {/* folder path */}
 

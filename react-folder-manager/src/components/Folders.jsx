@@ -57,7 +57,7 @@ const Folders = ({ parent, folders, setParent, setFolders }) => {
     const updatedFolders = { ...folders };
     const folderToDelete = folders[fid];
 
-    console.log(updatedFolders)
+    console.log(updatedFolders);
     delete updatedFolders[fid];
 
     // when i click on a child folder, it deletes the that child it from parent
@@ -72,33 +72,32 @@ const Folders = ({ parent, folders, setParent, setFolders }) => {
 
   const sortFolders = (option) => {
     const sortedKeys = Object.keys(folders).sort((a, b) => {
-
       const titleA = folders[a].title.toUpperCase();
       const titleB = folders[b].title.toUpperCase();
-  
-      if (option === 'asc') {
+
+      if (option === "asc") {
         return titleA.localeCompare(titleB);
-      } else if (option === 'desc') {
+      } else if (option === "desc") {
         return titleB.localeCompare(titleA);
       }
       return 0;
     });
-  
+
     const sortedFolders = {};
 
     sortedKeys.forEach((key) => {
       sortedFolders[key] = folders[key];
     });
-  
+
     return sortedFolders;
   };
-  
+
   const handleSortChange = (event) => {
     const selectedOption = event.target.value;
     setSortOption(selectedOption);
     const sortedFolders = sortFolders(selectedOption);
     setFolders(sortedFolders); // Update state with sorted folders
-  };  
+  };
 
   // path
   useEffect(() => {
@@ -121,15 +120,20 @@ const Folders = ({ parent, folders, setParent, setFolders }) => {
     <div className="mt-5 mx-24">
       <h1 className="text-slate-600 text-3xl">Folder Manager</h1>
 
-      {/* home, create folder btn container */}
+      <div className="">
+        {/* home, create folder btn container */}
 
-      <Navigation
-        setParent={setParent}
-        handleCreateFolder={handleCreateFolder}
-      />
-      {/* Sorting dropdown */}
-      
-      <SortDropdown sortOption={sortOption} handleSortChange={handleSortChange} />
+        <Navigation
+          setParent={setParent}
+          handleCreateFolder={handleCreateFolder}
+        />
+        {/* Sorting dropdown */}
+
+        <SortDropdown
+          sortOption={sortOption}
+          handleSortChange={handleSortChange}
+        />
+      </div>
 
       {/* folder path */}
 

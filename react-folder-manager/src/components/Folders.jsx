@@ -4,24 +4,10 @@ import PathNavigation from "./PathNavigation";
 import Folder from "./Folder";
 
 const Folders = ({ parent, folders, setParent, setFolders }) => {
-  
   const [path, setPath] = useState([]);
+  const [sortOption, setSortOption] = useState("asc");
 
-  // path
-  useEffect(() => {
-    const updatePath = () => {
-      let currPath = parent; // current parent path
-      const newPath = [];
-
-      while (currPath !== 0 && folders[currPath]) {
-        newPath.unshift(folders[currPath].title); // adding curr folder name in the start of array
-        currPath = folders[currPath].parent;
-      }
-
-      setPath(newPath);
-    };
-    updatePath();
-  }, [parent, folders]);
+  // sort folders alphabetically
 
   // path functionalities
   const handlePathClick = (index) => {
@@ -57,7 +43,7 @@ const Folders = ({ parent, folders, setParent, setFolders }) => {
       }
 
       // set folders to local storage
-      localStorage.setItem('folders',JSON.stringify(updatedFolders))
+      localStorage.setItem("folders", JSON.stringify(updatedFolders));
 
       return updatedFolders;
     });
@@ -82,6 +68,53 @@ const Folders = ({ parent, folders, setParent, setFolders }) => {
     setFolders(updatedFolders);
   };
 
+  const sortFolders = (option) => {
+    const sortedKeys = Object.keys(folders).sort((a, b) => {
+      
+      const titleA = folders[a].title.toUpperCase();
+      const titleB = folders[b].title.toUpperCase();
+  
+      if (option === 'asc') {
+        return titleA.localeCompare(titleB);
+      } else if (option === 'desc') {
+        return titleB.localeCompare(titleA);
+      }
+      return 0;
+    });
+  
+    const sortedFolders = {};
+
+    sortedKeys.forEach((key) => {
+      sortedFolders[key] = folders[key];
+    });
+  
+    return sortedFolders;
+  };
+  
+  const handleSortChange = (event) => {
+    const selectedOption = event.target.value;
+    setSortOption(selectedOption);
+    const sortedFolders = sortFolders(selectedOption);
+    setFolders(sortedFolders); // Update state with sorted folders
+  };  
+
+  // path
+  useEffect(() => {
+    // console.log(folders)
+    const updatePath = () => {
+      let currPath = parent; // current parent path
+      const newPath = [];
+
+      while (currPath !== 0 && folders[currPath]) {
+        newPath.unshift(folders[currPath].title); // adding curr folder name in the start of array
+        currPath = folders[currPath].parent;
+      }
+
+      setPath(newPath);
+    };
+    updatePath();
+  }, [parent, folders]);
+
   return (
     <div className="mt-5 mx-24">
       <h1 className="text-slate-600 text-3xl">Folder Manager</h1>
@@ -92,6 +125,14 @@ const Folders = ({ parent, folders, setParent, setFolders }) => {
         setParent={setParent}
         handleCreateFolder={handleCreateFolder}
       />
+      {/* Sorting dropdown */}
+      <div>
+        <label htmlFor="sort">Sort by: </label>
+        <select id="sort" value={sortOption} onChange={handleSortChange}>
+          <option value="asc">Ascending</option>
+          <option value="desc">Descending</option>
+        </select>
+      </div>
 
       {/* folder path */}
 
@@ -104,7 +145,13 @@ const Folders = ({ parent, folders, setParent, setFolders }) => {
           if (thisFolder.parent !== parent) return null;
 
           return (
-            <Folder key={fid} setParent={setParent} thisFolder={thisFolder} handleDelete={handleDelete} fid={fid} />
+            <Folder
+              key={fid}
+              setParent={setParent}
+              thisFolder={thisFolder}
+              handleDelete={handleDelete}
+              fid={fid}
+            />
           );
         })}
       </div>

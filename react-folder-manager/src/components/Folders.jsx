@@ -21,9 +21,10 @@ const Folders = ({ parent, folders, setParent, setFolders }) => {
 
     if (matchedFolder) {
       setParent(matchedFolder[0]); // matched folder id set to parent
+      localStorage.setItem('currentParent',JSON.stringify(matchedFolder[0]))
     }
   };
-
+  
   // create folder btn
   const handleCreateFolder = () => {
     let randomValue = Math.random().toString(16).slice(2);
@@ -103,18 +104,18 @@ const Folders = ({ parent, folders, setParent, setFolders }) => {
   useEffect(() => {
     // console.log(folders)
     const updatePath = () => {
-      let currPath = parent; // current parent path
+      let currPath = parent ; // current parent path
       const newPath = [];
 
       while (currPath !== 0 && folders[currPath]) {
         newPath.unshift(folders[currPath].title); // adding curr folder name in the start of array
         currPath = folders[currPath].parent;
       }
-
       setPath(newPath);
     };
     updatePath();
   }, [parent, folders]);
+  
 
   return (
     <div className="mt-5 mx-24">

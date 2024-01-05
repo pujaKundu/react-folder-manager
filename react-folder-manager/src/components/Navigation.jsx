@@ -2,7 +2,7 @@ import React from 'react'
 
 const Navigation = ({setParent,handleCreateFolder}) => {
   return (
-    <div className="flex ml-5 my-5">
+    <div className="flex  my-5">
         {/* back to home */}
         <button
           onClick={() => {

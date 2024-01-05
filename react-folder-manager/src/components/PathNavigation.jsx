@@ -2,7 +2,7 @@ import React from 'react'
 
 const PathNavigation = ({path, handlePathClick}) => {
   return (
-    <div className="m-5 flex">
+    <div className="mr-5 flex">
         {/* path icon */}
         <svg
           xmlns="http://www.w3.org/2000/svg"

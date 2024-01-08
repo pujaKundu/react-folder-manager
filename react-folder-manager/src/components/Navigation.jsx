@@ -1,8 +1,8 @@
 import React from 'react'
 
-const Navigation = ({setParent,handleCreateFolder}) => {
+const Navigation = ({setParent,handleCreateFolder,setShowInput}) => {
   return (
-    <div className="flex  my-5">
+    <div className="flex my-5">
         {/* back to home */}
         <button
           onClick={() => {
@@ -28,7 +28,8 @@ const Navigation = ({setParent,handleCreateFolder}) => {
 
         <button
           className="bg-green-700 hover:bg-green-800 cursor-pointer flex text-white"
-          onClick={handleCreateFolder}
+          // onClick={handleCreateFolder}
+          onClick={()=>setShowInput(true)}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"

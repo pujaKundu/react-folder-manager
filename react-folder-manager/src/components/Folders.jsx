@@ -3,11 +3,15 @@ import Navigation from "./Navigation";
 import PathNavigation from "./PathNavigation";
 import Folder from "./Folder";
 import SortDropdown from "./SortDropdown";
+import Modal from "./Modal";
 
 const Folders = ({ parent, folders, setParent, setFolders }) => {
   const [path, setPath] = useState([]);
   const [sortOption, setSortOption] = useState("asc");
+  const [folderName,setFolderName]=useState('');
+  const [showInput,setShowInput]=useState(false);
 
+  
   // path functionalities
   const handlePathClick = (index) => {
     const newPath = path.slice(0, index + 1);
@@ -21,16 +25,14 @@ const Folders = ({ parent, folders, setParent, setFolders }) => {
       setParent(matchedFolder[0]); 
     }
   };
-
-
   
   // create folder btn
-  const handleCreateFolder = () => {
+  const handleCreateFolder = (newFolderName) => {
     let randomValue = Math.random().toString(16).slice(2);
     const randomKey = `id${randomValue}`;
 
     const newFolder = {
-      title: `Folder ${Object.keys(folders).length + 1}`,
+      title:newFolderName,
       parent: parent,
       child: [],
     };
@@ -42,7 +44,6 @@ const Folders = ({ parent, folders, setParent, setFolders }) => {
       if (updatedFolders[parent]) {
         updatedFolders[parent].child.push(randomKey);
       }
-
       // set folders to local storage
       localStorage.setItem("folders", JSON.stringify(updatedFolders));
 
@@ -57,7 +58,6 @@ const Folders = ({ parent, folders, setParent, setFolders }) => {
     const updatedFolders = { ...folders };
     const folderToDelete = folders[fid];
 
-    console.log(updatedFolders);
     delete updatedFolders[fid];
 
     // when i click on a child folder, it deletes the that child it from parent
@@ -127,6 +127,7 @@ const Folders = ({ parent, folders, setParent, setFolders }) => {
         <Navigation
           setParent={setParent}
           handleCreateFolder={handleCreateFolder}
+          setShowInput={setShowInput}
         />
         {/* Sorting dropdown */}
 
@@ -140,6 +141,14 @@ const Folders = ({ parent, folders, setParent, setFolders }) => {
 
       <PathNavigation path={path} handlePathClick={handlePathClick} />
 
+      {showInput && (
+        <Modal
+          setShowInput={setShowInput}
+          setFolderName={setFolderName}
+          handleCreateFolder={handleCreateFolder}
+          folders={folders}
+        />
+      )}
       <div className="grid lg:grid-cols-3 grid-cols-1 md:grid-cols-2">
         {Object.keys(folders).map((fid) => {
           let thisFolder = folders[fid];
